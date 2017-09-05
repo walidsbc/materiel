@@ -1,0 +1,8 @@
+security.login.username: Login
+security.login.email: Email
+security.login.password: 'Mot de passe'
+registration.submit: 'Inscription'
+resetting.request.invalid_username: __resetting.request.invalid_username
+resetting.request.username: Login
+resetting.request.submit: __resetting.request.submit
+security.login.submit: Connexion

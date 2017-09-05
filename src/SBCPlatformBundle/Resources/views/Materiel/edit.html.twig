@@ -1,0 +1,229 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    {% stylesheets output="css/compiled/mainMateriel.css" filter="cssrewrite"
+    'bundles/sbcplatform/assets/skins/dropify/css/dropify.css'
+    'bundles/sbcplatform/bower_components/kendo-ui/styles/kendo.common-material.min.css'
+    'bundles/sbcplatform/bower_components/kendo-ui/styles/kendo.material.min.css'%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+{% block title %}
+    Modifier un matériel - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Formulaire de modification du matériel</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">veuillez bien remplir les champs</span>
+    </div>
+    {{ include("SBCPlatformBundle:Materiel:form.html.twig") }}
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script>
+        altair_forms.parsley_validation_config();
+    </script>
+    {% javascripts output="js/compiled/mainMateriel.js"
+    'bundles/sbcplatform/assets/js/custom/dropify/dist/js/dropify.min.js'
+    'bundles/sbcplatform/assets/js/kendoui_custom.min.js'
+    'bundles/sbcplatform/assets/js/pages/forms_file_input.min.js'
+    'bundles/sbcplatform/bower_components/parsleyjs/dist/parsley.min.js'
+    'bundles/sbcplatform/assets/js/pages/forms_validation.min.js'
+    'bundles/sbcplatform/jQuery-Mask-Plugin/js/jquery.mask.min.js'
+    'bundles/sbcplatform/sfCollectionAnalyzer/sf_collection_analyzer.js'
+    'bundles/sbcplatform/assets/js/kendoui_custom.js'
+    'bundles/sbcplatform/assets/js/pages/kendoui.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(function ($) {
+            $('#sbcplatformbundle_materiel_edit_buyprice').mask('000.000.000.000', {reverse: true});
+            $('#sbcplatformbundle_materiel_edit_lifetime').mask('000.000', {reverse: true});
+        });
+        $('#fournisseurs').selectize({
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            options: [],
+            create: false,
+            render: {
+                option: function (item, escape) {
+                    return '<div>' +
+                        '<span class="title">' +
+                        '<span class="name">' + escape(item.text) + '</span>' +
+                        '</div>';
+                }
+            },
+            score: function (search) {
+                var score = this.getScoreFunction(search);
+                return function (item) {
+                    return score(item) * (1 + Math.min(item.watchers / 100, 1));
+                };
+            },
+            load: function (query, callback) {
+                if (!query.length) return callback();
+                var request = encodeURIComponent(query);
+                var url = '{{ path('fournisseur_liste_for_select2') ~ '?q=request' }}';
+                url = url.replace('request', request);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res);
+                    }
+                });
+            }
+        });
+        $(function () {
+
+//            $('.dropify-clear').on('click', function () {
+//                $('#sbcplatformbundle_materiel_edit_factureFile').prop('required', true);
+//            });
+            $oldname = $('#sbcplatformbundle_materiel_edit_name').val().toUpperCase();
+            $('#sbcplatformbundle_materiel_edit_name').on('change', function () {
+                $name = $('#sbcplatformbundle_materiel_edit_name').val().toUpperCase();
+                var url = '{{ path('materiel_byname', {'name': 'namE'}) }}';
+                url = url.replace('namE', $name);
+                if ($name != $oldname) {
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: url,
+                        success: function (json) {
+                            console.log(JSON.stringify(json));
+                            if (json.success == true) {
+                                window.Parsley.addValidator('name', {
+                                    validateString: function (value) {
+                                        return false;
+                                    },
+                                    messages: {
+                                        en: 'This name already exists',
+                                        fr: "This name already exists."
+                                    }
+                                });
+                            } else {
+                                window.Parsley.addValidator('name', {
+                                    validateString: function (value) {
+                                        return true;
+                                    }
+                                });
+                            }
+                            $('#sbcplatformbundle_materiel_edit_name').parsley().validate();
+                        }
+                    });
+                }
+            });
+            $oldreference = $('#sbcplatformbundle_materiel_edit_reference').val().toUpperCase();
+            $('#sbcplatformbundle_materiel_edit_reference').on('change', function () {
+                $reference = $('#sbcplatformbundle_materiel_edit_reference').val().toUpperCase();
+                var url = '{{ path('materiel_byreference', {'reference': 'referencE'}) }}';
+                url = url.replace('referencE', $reference);
+                if ($reference != $oldreference) {
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: url,
+                        success: function (json) {
+                            console.log(JSON.stringify(json));
+                            if (json.success == true) {
+                                // declancher une exeption
+                                window.Parsley.addValidator('reference', {
+                                    validateString: function (value) {
+                                        return false;
+                                    },
+                                    messages: {
+                                        en: 'This reference already exists',
+                                        fr: "This reference already exists."
+                                    }
+                                });
+                            } else {
+                                window.Parsley.addValidator('reference', {
+                                    validateString: function (value) {
+                                        return true;
+                                    }
+                                });
+                            }
+                            $('#sbcplatformbundle_materiel_edit_reference').parsley().validate();
+                        }
+                    });
+                }
+            });
+            $oldserialnumber = $('#sbcplatformbundle_materiel_edit_serialnumber').val().toUpperCase();
+            $('#sbcplatformbundle_materiel_edit_serialnumber').on('change', function () {
+                $serialnumber = $('#sbcplatformbundle_materiel_edit_serialnumber').val().toUpperCase();
+                var url = '{{ path('materiel_byserialnumber', {'serialnumber': 'serialnumbeR'}) }}';
+                url = url.replace('serialnumbeR', $serialnumber);
+                if ($serialnumber != $oldserialnumber) {
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: url,
+                        success: function (json) {
+                            console.log(JSON.stringify(json));
+                            if (json.success == true) {
+                                // declancher une exeption
+                                window.Parsley.addValidator('serialnumber', {
+                                    validateString: function (value) {
+                                        return false;
+                                    },
+                                    messages: {
+                                        en: 'This serialnumber already exists',
+                                        fr: "This serialnumber already exists."
+                                    }
+                                });
+                            } else {
+                                window.Parsley.addValidator('serialnumber', {
+                                    validateString: function (value) {
+                                        return true;
+                                    }
+                                });
+                            }
+                            $('#sbcplatformbundle_materiel_edit_serialnumber').parsley().validate();
+                        }
+                    });
+
+                }
+            });
+            $oldregistration = $('#sbcplatformbundle_materiel_edit_registration').val().toUpperCase();
+            $('#sbcplatformbundle_materiel_edit_registration').on('change', function () {
+                $registration = $('#sbcplatformbundle_materiel_edit_registration').val().toUpperCase();
+                var url = '{{ path('materiel_byregistration', {'registration': 'registratioN'}) }}';
+                url = url.replace('registratioN', $registration);
+                if ($registration != $oldregistration) {
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: url,
+                        success: function (json) {
+                            console.log(JSON.stringify(json));
+                            if (json.success == true) {
+                                // declancher une exeption
+                                window.Parsley.addValidator('registration', {
+                                    validateString: function (value) {
+                                        return false;
+                                    },
+                                    messages: {
+                                        en: 'This registration already exists',
+                                        fr: "This registration already exists."
+                                    }
+                                });
+                            } else {
+                                window.Parsley.addValidator('registration', {
+                                    validateString: function (value) {
+                                        return true;
+                                    }
+                                });
+                            }
+                            $('#sbcplatformbundle_materiel_edit_registration').parsley().validate();
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
+{% endblock %} 

@@ -1,0 +1,64 @@
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE7FD;</i> </span>
+                            {{ form_label(form.code, "Code de l'ouvrier"|trans) }}
+                            {{ form_widget(form.code, {'attr': {'class': 'md-input', 'required':'', 'data-parsley-code':'3'}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.code) }} </span>
+                    </div>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE7FD;</i> </span>
+                            {{ form_label(form.name, "Nom de l'ouvrier"|trans) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'md-input', 'required':''}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.name) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE0D0;</i></span>
+                            {{ form_label(form.cin, "CIN"|trans) }}
+                            {{ form_widget(form.cin, {'attr': {'class': 'md-input', 'required':'', 'id':'cin', 'data-parsley-cin':'3'}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.cin) }} </span>
+                    </div>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
+                            </span>
+                            {{ form_label(form.phonenumber, "Tél"|trans) }}
+                            {{ form_widget(form.phonenumber, {'attr': {'class': 'md-input', 'id':'phonenumber', 'data-parsley-phonenumber':'3'}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.phonenumber) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

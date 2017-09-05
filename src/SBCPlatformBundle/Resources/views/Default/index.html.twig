@@ -1,0 +1,145 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+    {% stylesheets output="css/compiled/kendo.css" filter="cssrewrite"
+    'bundles/sbcplatform/bower_components/kendo-ui/styles/kendo.common-material.min.css'
+    'bundles/sbcplatform/bower_components/kendo-ui/styles/kendo.material.min.css'
+    %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+{% block title %}
+    {% trans %}  Disponibilité de matériel{% endtrans %} - {{ parent() }}
+{% endblock %}
+{% block jshead %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Vérifier la disponibilité d'un matériel</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">veuillez taper le nom du matériel</span>
+    </div>
+    <div id="page_content_inner">
+        <div id="notification"></div>
+
+        <div class="md-card">
+            <div class="md-card-content large-padding">
+                <form class="uk-form-stacked" id="form_validation">
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-2 selectMateriel">
+                            <div class="parsley-row">
+                                <label for="materiel" class="control-label col-md-4 col-sm-4 col-xs-12">Matériel</label>
+                            </div>
+                            <div class="parsley-row">
+                                <select class="" name="materiel" id="materiel">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="parsley-row">
+                                <label for="emplacement"
+                                       class="control-label col-md-4 col-sm-4 col-xs-12">Emplacement</label>
+                                <input id="emplacement" name="emplacement" type="text" class="md-input"/>
+                            </div>
+                            <span class="red-text text-darken-2">    </span>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainValidationwithKendo.js"
+    'bundles/sbcplatform/bower_components/parsleyjs/dist/parsley.min.js'
+    'bundles/sbcplatform/assets/js/pages/forms_validation.min.js'
+    'bundles/sbcplatform/assets/js/kendoui_custom.js'
+    'bundles/sbcplatform/assets/js/pages/kendoui.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $(function () {
+            var materiel = $('#materiel');
+            var emplacement = $('#emplacement');
+            emplacement.prop('readonly', true);
+            var materiels = null;
+
+            materiel.select2entity({
+                placeholder: 'Tapez le nom du matériel',
+                allowClear: true,
+                width: $('.selectMateriel').width(),
+                ajax: {
+                    url: '{{ path('materiel_all_select2_join_deplacement') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        materiels = data;
+                        params.page = params.page || 1;
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 2
+//
+            });
+
+            {#materiel.kendoComboBox({#}
+                {#placeholder: 'Choisir le matériel',#}
+                {#autoBind: false,#}
+                {#dataTextField: "text",#}
+                {#dataValueField: "id",#}
+                {#filter: "contains",#}
+                {#suggest: true,#}
+                {#dataSource: {#}
+                    {#transport: {#}
+                        {#read: {#}
+                            {#url: '{{ path('materiel_all_select2_join_deplacement') }}'#}
+                        {#}#}
+                    {#}#}
+                {#}#}
+            {#});#}
+
+            materiel.on('change', function () {
+                var disponible = true;
+//                materiels= materiel.data("kendoComboBox");
+
+
+                $.each(materiels[0].deplacements, function (key, value) {
+                    if (value.arriveddate === null) {
+                        disponible = false;
+                    }
+                });
+                if (disponible) {
+                    $('#notification').html(' <div class="uk-width-1-1"> <div class="uk-alert uk-alert-success" data-uk-alert> <a href="#" class="uk-alert-close uk-close"></a>Ce matériel est prêt pour être déplacé </div> </div>');
+                }
+                else {
+                    $('#notification').html(' <div class="uk-width-1-1"> <div class="uk-alert uk-alert-danger" data-uk-alert> <a href="#" class="uk-alert-close uk-close"></a>Ce matériel ne peut pas être déplacé </div> </div>');
+
+                }
+                if(materiels[0].deplacements.length !==0) {
+                    emplacement.val(materiels[0].deplacements[materiels[0].deplacements.length-1].destinatedlocation.text);
+                    emplacement.focus();
+                }
+                else {
+                    emplacement.val("Pas encore de déplacement(s) efféctués(s)");
+                    emplacement.focus();
+                }
+            });
+        });
+    </script>
+{% endblock %} 

@@ -1,0 +1,363 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    Lecture d'un materiel - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>{{ materiel.name }}</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">{{ materiel.reference }}</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="user_content">
+            <ul id="user_profile_tabs" class="uk-tab"
+                data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}"
+                data-uk-sticky="{ top: 130, media: 960 }">
+                <li class="uk-active"><a href="#">Matériel</a></li>
+                <li><a href="#">Plan. interv. préentives</a></li>
+            </ul>
+            <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
+                <li>
+                    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-xLarge-2-10 uk-width-large-3-10">
+                            <div class="md-card">
+                                <div class="md-card-toolbar">
+                                    <h3 class="md-card-toolbar-heading-text">
+                                        Infos
+                                    </h3>
+                                </div>
+                                <div class="md-card-content">
+                                    <ul class="md-list">
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block">Prix d'achat  </span>
+                                                <span class="md-list-heading uk-text-large">{{ materiel.buyprice }}
+                                                    TND</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block">Date d'achat</span>
+                                                <span class="md-list-heading uk-text-large">{{ materiel.buydate|date("d/m/Y") }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block">Durée de vie</span>
+                                                <span class="md-list-heading uk-text-large"> {{ materiel.lifetime }}
+                                                    Heure(s)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block">Coût de l'unité </span>
+                                                <span class="md-list-heading uk-text-large">{{ materiel.unitcost }}
+                                                    TND/Heure</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block"> Durée de vie restante</span>
+                                                <span class="md-list-heading uk-text-large">{{ materiel.lifetimeremaining }}
+                                                    Heure(s)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="uk-text-small uk-text-muted uk-display-block">  Etat  </span>
+                                                {% if not (materiel.activated) %}
+                                                    <span class="md-list-heading uk-text-large uk-text-danger">{{ materiel.status }}</span>
+                                                {% else %}
+                                                    <span class="md-list-heading uk-text-large uk-text-success">Actif</span>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-xLarge-8-10  uk-width-large-7-10">
+                            <div class="md-card">
+                                <div class="md-card-content large-padding">
+                                    <div class="uk-grid uk-grid-divider uk-grid-medium">
+                                        <div class="uk-width-large-1-2">
+
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-3-3">
+                                                    <h5>
+                                                        Détails Matériel
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small">Nom du matériel</span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    <span class="uk-text-large uk-text-middle">
+                                                        <a href="#">{{ materiel.name }}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small">Référence </span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    <span class="uk-text-large uk-text-middle">{{ materiel.reference }}</span>
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small">Immatriculation  </span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.registration }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Numéro de série </span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.serialnumber }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+
+                                            <hr class="uk-grid-divider uk-hidden-large">
+                                        </div>
+                                        <div class="uk-width-large-1-2">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-3-3">
+                                                    <h5>
+                                                        Détails fournisseur
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Raison sociale</span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.fournisseur.companyname }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Tél</span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.fournisseur.phonenumber }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Adresse</span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.fournisseur.address }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Email</span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.fournisseur.email }}
+                                                </div>
+                                            </div>
+                                            <hr class="uk-grid-divider">
+                                            <div class="uk-grid uk-grid-small">
+                                                <div class="uk-width-large-1-3">
+                                                    <span class="uk-text-muted uk-text-small"> Site web </span>
+                                                </div>
+                                                <div class="uk-width-large-2-3">
+                                                    {{ materiel.fournisseur.website }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-xLarge-10-10  uk-width-large-10-10">
+                            <div class="md-card">
+                                <div class="md-card-content large-padding">
+                                    <div class="md-card-toolbar">
+                                        <h3 class="md-card-toolbar-heading-text">
+                                            Fichiers
+                                        </h3>
+                                    </div>
+                                    <br/>
+                                    <div class="uk-grid uk-grid-divider uk-grid-medium">
+                                        {#{% if materiel.factureName is not null %}#}
+                                            {#<div class="uk-width-small-2-10">#}
+                                                {#<div class="md-card">#}
+                                                    {#<a target="_blank"#}
+                                                       {#href="{{ vich_uploader_asset(materiel, 'factureFile') }}">#}
+                                                        {#<img src="{{ asset('bundles/sbcplatform/images/pdf.png') }}"#}
+                                                             {#alt=""#}
+                                                             {#href="{{ vich_uploader_asset(materiel, 'factureFile') }}"#}
+                                                        {#>#}
+                                                    {#</a>#}
+                                                    {#<div class="md-card-content">#}
+                                                        {#<div class="uk-width-large-1-3">#}
+                                                            {#<span class="uk-text-muted">  <strong>#}
+                                                                    {#<a target="_blank"#}
+                                                                       {#href="{{ vich_uploader_asset(materiel, 'factureFile') }}">#}
+                                                                        {#Visualiser facture#}
+                                                                    {#</a>#}
+                                                                {#</strong><br>#}
+                                                            {#</span>#}
+                                                        {#</div>#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#{% endif %}#}
+                                        {% if materiel.files is not null %}
+                                            {% for file in materiel.files %}
+                                                <div class="uk-width-small-2-10">
+                                                    <div class="md-card">
+                                                        <a target="_blank"
+                                                           href="{{ vich_uploader_asset(file, 'file') }}"
+                                                        >
+                                                            <img src="{{ asset('bundles/sbcplatform/images/pdf.png') }}"
+                                                                 alt=""
+                                                                 href="{{ vich_uploader_asset(file, 'file') }}"
+                                                            >
+                                                        </a>
+                                                        <div class="md-card-content">
+
+                                                            <div class="uk-width-large-1-3">
+                                                                <span class="uk-text-muted">
+                                                                    <strong>
+                                                                        <a target="_blank"
+                                                                           href="{{ vich_uploader_asset(file, 'file') }}">
+                                                                            Visualiser {{ file.description }}</a>
+                                                                    </strong><br>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+                        {% for planification in materiel.planifications %}
+                            <div class="uk-width-xLarge-1-2 uk-width-large-1-2">
+                                <div class="md-card">
+                                    <div class="md-card-toolbar">
+                                        <h3 class="md-card-toolbar-heading-text">
+                                            Infos
+                                        </h3>
+                                    </div>
+                                    <div class="md-card-content">
+                                        <ul class="md-list">
+                                            <li>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted uk-display-block">Nature d'intervention  </span>
+                                                    <span class="md-list-heading uk-text-large">{{ planification.natureintervention.name }}
+                                                </span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted uk-display-block">Valeur du cycle</span>
+                                                    <span class="md-list-heading uk-text-large">{{ planification.cyclevalue }}
+                                                        Heure(s)</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted uk-display-block">Seuil</span>
+                                                    <span class="md-list-heading uk-text-large"> {{ planification.threshold }}
+                                                        Heure(s)</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted uk-display-block">Utilisation </span>
+                                                    <span class="md-list-heading uk-text-large">{{ planification.sumuseddurationsofpointages }}
+                                                        Heure(s)</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="md-fab-wrapper md-fab-speed-dial">
+        <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}" title="Actions">
+            <i class="material-icons">&#xE55D;</i>
+        </a>
+        <div class="md-fab-wrapper-small">
+            <a class="md-fab md-fab-small md-fab-danger" href="javascript:void(0)"
+               data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Supprimer"
+               onclick="UIkit.modal.confirm('Voulez vous vraiment supprimer ce matériel ?',
+                       function(){
+                       var url = '{{ path('materiel_delete', {'id': 'idMateriel'}) }}';
+                       url = url.replace('idMateriel', {{ materiel.id }});
+                       $.ajax({
+                       url: url,
+                       type: 'delete',
+                       success: function (result) {
+                       if (result.success) {
+                       UIkit.modal.alert('Le matériel a été supprimé avec succès.'
+                       ).on('hide.uk.modal', function() {
+                       history.back();
+                       });
+                       }
+                       },
+                       error: function (e) {
+                       console.log(e.responseText);
+                       UIkit.modal.alert('Vous n\'avez pas le droit de supprimer ce matériel, il est utilisé dans un transfert ou un pointage.');;
+                       }
+                       });
+
+                       });"
+
+            ><i class="material-icons">&#xE92B;</i>
+            </a>
+            {% if materiel.activated %}
+                <a class="md-fab md-fab-small" href="{{ path('materiel_desactiver', {'id': materiel.id}) }}"
+                   data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Désactiver">
+                    <i class="material-icons">&#xE5C9;</i>
+                </a>
+            {% endif %}
+            <a class="md-fab md-fab-small md-fab-success" href="{{ path('materiel_edit', {'id': materiel.id}) }}"
+               data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Modifier">
+                <i class="material-icons">&#xE3C9;</i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainm.js"
+    'bundles/sbcplatform/assets/js/pages/components_cards.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

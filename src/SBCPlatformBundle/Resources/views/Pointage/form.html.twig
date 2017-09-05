@@ -1,0 +1,95 @@
+<div id="page_content_inner">
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        {% if flash_message == 0 %}
+            <div class="uk-width-1-1">
+                <div class="uk-alert uk-alert-danger" data-uk-alert>
+                    <a href="#" class="uk-alert-close uk-close"></a>
+                    {% trans %} Vous ne pourrez plus pointer ce matériel. Il a atteint sa durée de vie
+                    limite.{% endtrans %}
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-danger">
+            </div>
+            <div class="uk-width-1-1">
+                <div class="uk-alert uk-alert-danger" data-uk-alert>
+                    <a href="#" class="uk-alert-close uk-close"></a>
+                    {% trans %} Veuillez entrer une valeure qui ne dépasse pas {% endtrans %}
+                    <strong>{{ flash_message }}</strong> {% trans %} heure(s) {% endtrans %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                       <span class="uk-form-help-block">
+                           {{ form_label(form.materiel, "Matériel"|trans, {'label_attr': {'class': 'control-label col-md-4 col-sm-4 col-xs-12'}}) }}
+                       </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.materiel, {'attr': {'class': 'md-input'}}) }}
+                        <span class="blue-text text-darken-2" id="lifetimeremaining"> </span>
+                    </div>
+                    <span class="red-text text-darken-2">     {{ form_errors(form.materiel) }} </span>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <span class="uk-form-help-block">
+                            {{ form_label(form.emplacement, "Emplacement"|trans, {'label_attr': {'class': 'control-label col-md-4 col-sm-4 col-xs-12'}}) }}
+                        </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.emplacement, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.emplacement) }} </span>
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <span class="uk-form-help-block">
+                            {{ form_label(form.pointedby, "Par"|trans, {'label_attr': {'class': 'control-label col-md-4 col-sm-4 col-xs-12'}}) }}
+                        </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.pointedby, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.pointedby) }} </span>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="uk-grid">
+                        <div class="uk-width-large-2-3 uk-width-1-1">
+                            <div class="uk-input-group">
+                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                <label for="uk_dp_1">{{ form_label(form.creationdate, "Pointé le"|trans) }}</label>
+                                {{ form_widget(form.creationdate, {'attr': {'class': 'md-input', 'id':'uk_dp_1', 'data-uk-datepicker':'{format:DD.MM.YYYY}'}}) }}
+                                <span class="col-sm-4 control-label red">    {{ form_errors(form.creationdate) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        {{ form_label(form.usedduration, "Durée d'utilisation"|trans, {'label_attr': {'class': 'control-label col-md-4 col-sm-4 col-xs-12'}}) }}
+                        {{ form_widget(form.usedduration, {'attr': {'class': 'md-input', 'data-parsley-usedduration':'1'}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.usedduration) }} </span>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

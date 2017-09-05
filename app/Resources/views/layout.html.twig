@@ -1,0 +1,428 @@
+<!doctype html>
+<!--[if lte IE 9]>
+<html class="lte-ie9" lang="fr"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="fr"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>{% block title %}STRAM Matériel{% endblock %}</title>
+    {% block css %}
+        {% stylesheets output="css/compiled/main.css" filter="cssrewrite"
+        'bundles/sbcplatform/select2/css/select2.css'
+        'bundles/sbcplatform/bower_components/uikit/css/uikit.almost-flat.css'
+        'bundles/sbcplatform/assets/icons/flags/flags.css'
+        'bundles/sbcplatform/assets/css/main.css'
+        'bundles/sbcplatform/assets/css/themes/themes_combined.min.css'
+        'bundles/sbcplatform/assets/css/ie.css' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('iconeAGM.png') }}"/>
+    {% endblock %}
+    {% block jshead %}
+        {% javascripts output="js/compiled/mainheader.js"
+        'bundles/sbcplatform/jquery-3.1.1/jquery-3.1.1.min.js'
+        'bundles/sbcplatform/moment/moment.js'
+        'bundles/sbcplatform/timeLeft/timeLeft.js' %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+</head>
+<body class="sidebar_main_open sidebar_main_swipe">
+<!-- main header -->
+<header id="header_main">
+    <div class="header_main_content">
+        <nav class="uk-navbar">
+            <!-- main sidebar switch -->
+            <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                <span class="sSwitchIcon"></span>
+            </a>
+            <!-- secondary sidebar switch -->
+            <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                <span class="sSwitchIcon"></span>
+            </a>
+            <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav user_actions">
+                    <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                        <a href="#" class="user_action_icon"
+                           onclick="setNotificationsSeen();">
+                            <i class="material-icons md-24 md-light">&#xE7F4;</i>
+                            <span class="uk-badge" id="numberofnotifcations" style="visibility: hidden;"></span>
+                        </a>
+                        <div class="uk-dropdown uk-dropdown-xlarge">
+                            <div class="md-card-content">
+                                <ul class="uk-tab uk-tab-grid"
+                                    data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                    <li class="uk-width-2-2">
+                                        <a class="js-uk-prevent uk-text-small" onclick="goToAllNotifications()">Afficher
+                                            tout
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul id="header_alerts" class="uk-switcher uk-margin">
+                                    <li>
+                                        <ul class="md-list md-list-addon" id="notifications">
+                                        </ul>
+                                        <div class="uk-text-center uk-margin-top uk-margin-small-bottom"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_image">
+                                <img class="md-user-image" style="border: solid 1px;background: #fff;"
+                                     src="{{ asset('bundles/sbcplatform/assets/img/avatars/user.png') }}"
+                                     alt="user_avatar"/>
+                            </a>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav js-uk-prevent">
+                                    <li>
+                                        <a href="{{ path('fos_user_security_logout') }}">
+                                            <i class="fa fa-sign-out pull-right"></i> Déconnexion
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}" class="user-profile dropdown-toggle"
+                           aria-expanded="false"> Connexion
+                            <span class=" fa fa-angle-down"></span>
+                        </a>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- main header end -->
+<!-- main sidebar -->
+<aside id="sidebar_main">
+    <div class="sidebar_main_header">
+        <div class="">
+            <a href="{{ path('sbc_platform_homepage') }}" class="sSidebar_hide sidebar_logo_large">
+                <img class="logo_regular" src="{{ asset('logoAGM.png') }}" alt="" height="50" width="180"/>
+            </a>
+        </div>
+    </div>
+    {% set menu = app.request.attributes.get('_route') %}
+    <div class="menu_section">
+        <ul>
+            <li title="Disponibilité du matériel" {% if menu == 'sbc_platform_homepage' %} class="act_section current_section" {% endif %}>
+                <a href="{{ path('homepage') }}"><span class="menu_icon"><i class="material-icons">&#xE8B6;</i></span>
+                    <span class="menu_title">Disponibilité matériel</span>
+                </a>
+            </li>
+
+            <li title="Chantiers" {% if menu == 'chantier_add' or menu == 'chantier_home' or menu == 'chantier_edit' or menu == 'chantier_view' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE1B7;</i></span>
+                    <span class="menu_title">Chantiers</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'chantier_add' %} class="act_item" {% endif %} >
+                        <a href="{{ path('chantier_add') }}">Ajouter un chantier</a>
+                    </li>
+                    <li {% if menu == 'chantier_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('chantier_home') }}">Afficher les chantiers</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Dépôts" {% if menu == 'depot_add' or menu == 'depot_home' or menu == 'depot_edit' or menu == 'depot_view' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE84F;</i></span>
+                    <span class="menu_title">Dépôts</span>
+                </a>
+                <ul>
+                    <li{% if menu == 'depot_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('depot_add') }}">Ajouter un dépôt</a>
+                    </li>
+                    <li {% if menu == 'depot_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('depot_home') }}">Afficher les dépôts</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Ouvriers" {% if menu == 'ouvrier_add' or menu == 'ouvrier_home' or menu == 'ouvrier_edit' or menu == 'ouvrier_view' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE7FD;</i></span>
+                    <span class="menu_title">Ouvriers</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'ouvrier_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('ouvrier_add') }}">Ajouter un ouvrier</a>
+                    </li>
+                    <li {% if menu == 'ouvrier_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('ouvrier_home') }}">Afficher les ouvriers</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Fournisseurs" {% if menu == 'fournisseur_add' or menu == 'fournisseur_home' or menu == 'fournisseur_view' or menu == 'fournisseur_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE8D3;</i></span>
+                    <span class="menu_title">Fournisseurs</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'fournisseur_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('fournisseur_add') }}">Ajouter un fournisseur</a>
+                    </li>
+                    <li {% if menu == 'fournisseur_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('fournisseur_home') }}">Afficher les fournisseurs</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Natures d'intervention" {% if menu == 'natureintervention_add' or menu == 'natureintervention_home' or menu == 'natureintervention_edit' or menu == 'natureintervention_view' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE566;</i></span>
+                    <span class="menu_title">Natures d'intervention</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'natureintervention_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('natureintervention_add') }}">Ajouter une nature d'intervention</a>
+                    </li>
+                    <li {% if menu == 'natureintervention_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('natureintervention_home') }}">Afficher les natures d'intervention</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li title="Matériel" {% if menu == 'materiel_add' or menu == 'materiel_home' or menu == 'materiel_view' or menu == 'materiel_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE243;</i></span>
+                    <span class="menu_title">Matériels</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'materiel_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('materiel_add') }}">Ajouter un matériel</a>
+                    </li>
+                    <li {% if menu == 'materiel_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('materiel_home') }}">Afficher les matériels</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Panifier.préventions" {% if menu == 'planification_prevention_add' or menu == 'planification_prevention_home' or menu == 'planification_prevention_view' or menu == 'planification_prevention_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE855;</i></span>
+                    <span class="menu_title">Planifier.préventions</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'planification_prevention_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('planification_prevention_add') }}">Ajouter une planification préventive</a>
+                    </li>
+                    <li {% if menu == 'planification_prevention_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('planification_prevention_home') }}">Afficher les planifications
+                            préventives</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Interventions curatives" {% if menu == 'intervention_curative_add' or menu == 'intervention_curative_home' or menu == 'intervention_curative_view' or menu == 'intervention_curative_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE869;</i></span>
+                    <span class="menu_title">Interv.Curatives</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'intervention_curative_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('intervention_curative_add') }}">Ajouter une intervention curative</a>
+                    </li>
+                    <li {% if menu == 'intervention_curative_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('intervention_curative_home') }}">Afficher les interventions curative</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Interventions préventives" {% if menu == 'intervention_preventive_add' or menu == 'intervention_preventive_home' or menu == 'intervention_preventive_view' or menu == 'intervention_preventive_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE869;</i></span>
+                    <span class="menu_title">Interv.Préventives</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'intervention_preventive_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('intervention_preventive_add') }}">Ajouter une intervention préventive</a>
+                    </li>
+                    <li {% if menu == 'intervention_preventive_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('intervention_preventive_home') }}">Afficher les interventions préventive</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Transferts matériels" {% if menu == 'deplacement_add' or menu == 'deplacement_home' or menu == 'deplacement_cancelled' or menu == 'deplacement_view' or menu == 'deplacement_cancel' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE572;</i></span>
+                    <span class="menu_title">Transferts matériels</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'deplacement_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('deplacement_add') }}">Ajouter un transfert</a>
+                    </li>
+                    <li {% if menu == 'deplacement_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('deplacement_home') }}">Afficher les transferts</a>
+                    </li>
+                    <li {% if menu == 'deplacement_cancelled' %} class="act_item" {% endif %}>
+                        <a href="{{ path('deplacement_cancelled') }}">Afficher les transferts annulés</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li title="Pointages" {% if menu == 'pointage_add' or menu == 'pointage_home' or menu == 'pointage_view' or menu == 'pointage_edit' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE39E;</i></span>
+                    <span class="menu_title">Pointages</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'pointage_add' %} class="act_item" {% endif %}>
+                        <a href="{{ path('pointage_add') }}">Ajouter un pointage</a>
+                    </li>
+                    <li {% if menu == 'pointage_home' %} class="act_item" {% endif %}>
+                        <a href="{{ path('pointage_home') }}">Afficher l'historique de pointages</a>
+                    </li>
+                </ul>
+            </li>
+            <li title="Couts" {% if menu == 'couts_emplacement' %} class="submenu_trigger act_section current_section" {% endif %}>
+                <a href="#"><span class="menu_icon"><i class="material-icons">&#xE227;</i></span>
+                    <span class="menu_title">Couts</span>
+                </a>
+                <ul>
+                    <li {% if menu == 'couts_emplacement' %} class="act_item" {% endif %}>
+                        <a href="{{ path('couts_emplacement') }}">Couts par emplacement</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside><!-- main sidebar end -->
+<div id="page_content">
+    {% block body %}
+    {% endblock %}
+    <footer id="footer">
+        ©
+        <script> document.write(new Date().getFullYear()); </script>
+        - <a target="_blank" href="http://www.sbc.tn">Smart Business Challenge</a>
+    </footer>
+</div>
+{% block js %}
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function () {
+            var wf = document.createElement('script');
+            wf.src = ('https:' === document.location.protocol ? 'https' : 'http') +
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+    {% javascripts output="js/compiled/main.js"
+    'bundles/sbcplatform/assets/js/common.js'
+    'bundles/sbcplatform/assets/js/uikit_custom.js'
+    'bundles/sbcplatform/assets/js/altair_admin_common.js'
+    'bundles/sbcplatform/bower_components/matchMedia/matchMedia.js'
+    'bundles/sbcplatform/bower_components/matchMedia/matchMedia.addListener.js'
+    'bundles/sbcplatform/select2/js/select2.min.js'
+    'bundles/tetranzselect2entity/js/select2entity.js'
+    'bundles/fosjsrouting/js/router.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        $(function () {
+            if (isHighDensity()) {
+                $.getScript("bower_components/dense/src/dense.js", function () {
+                    altair_helpers.retina_images();
+                });
+            }
+            if (Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+            refreshNotification();
+        });
+        $window.load(function () {
+            altair_helpers.ie_fix();
+        });
+        function refreshNotification() {
+            var notification = $('#notifications');
+            var numberofnotifcations = $('#numberofnotifcations');
+            setTimeout('refreshNotification();', 5000);
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "{{ path('notification_some') }}",
+                success: function (json) {
+                    var nomreNotificationsNonVus = 0;
+                    if (json.length > 0) {
+                        notification.html("");
+                        $.each(json, function (key, value) {
+                            var url = Routing.generate('materiel_view', {id: value.link.id});
+                            if (!value.seen) {
+                                nomreNotificationsNonVus++;
+                                notification.append(" <li>" +
+                                    " <div class='md-list-addon-element'>" +
+                                    " <i class='" + value.class + "'>" + value.icon +
+                                    " </i></div>" +
+                                    "<div class='md-list-content'>" +
+                                    "<span class='md-list-heading'><a href='" + url + "'>" + value.title + "</a>" +
+                                    " </span>" +
+                                    " <span class='uk-text-small uk-text-muted'>" + value.content +
+                                    "</span>" +
+                                    " <span class='uk-text-small uk-text-muted'>" +
+                                    timeLeft(new Date(value.creationdate.date)) + "</span>" +
+                                    "</div>" +
+                                    " </li>");
+                            }
+                            else {
+                                notification.append(" <li>" +
+                                    " <div class='md-list-addon-element'>" +
+                                    " <i class='" + value.class + " ' >" + value.icon +
+                                    " </i></div>" +
+                                    "<div class='md-list-content'>" +
+                                    "<span class='md-list-heading'><a href='" + url + "'>" + value.title + "</a>" +
+                                    "</span>" +
+                                    " <span class='uk-text-small uk-text-muted'>" + value.content +
+                                    "</span>" +
+                                    " <span class='uk-text-small uk-text-muted'>" +
+                                    timeLeft(new Date(value.creationdate.date)) + "</span>" +
+                                    "</div>" +
+                                    " </li>");
+                            }
+                        });
+                    }
+                    else {
+                        notification.html("");
+                        notification.append(" <li>" +
+                            " <div class='md-list-addon-element'>" +
+                            " <i class=''>" +
+                            " </i></div>" +
+                            "<div class='md-list-content'>" +
+                            "<span class='md-list-heading'><a href='#' >Pas de notification(s)" +
+                            " </a></span>" +
+                            " <span class='uk-text-small uk-text-muted'>" +
+                            "vous n\'avez aucune notification pour l\'instant</span>" +
+                            "</div>" +
+                            " </li>");
+                    }
+                    if (nomreNotificationsNonVus === 0) {
+                        numberofnotifcations.css('visibility', 'hidden');
+                    }
+                    else {
+                        numberofnotifcations.css('visibility', 'visible');
+                        numberofnotifcations.html(nomreNotificationsNonVus);
+                    }
+                    numberofnotifcations.trigger("change");
+                }
+            });
+        }
+        function setNotificationsSeen() {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "{{ path('notification_edit') }}",
+                success: function (json) {
+                }
+            });
+        }
+        function goToAllNotifications() {
+            var url = "{{ path('notification_home') }}";
+            $(location).attr("href", url);
+        }
+    </script>
+{% endblock %}
+</body>
+</html>

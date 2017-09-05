@@ -1,0 +1,54 @@
+'Ajouter un chantier': '__Ajouter un chantier'
+Chantiers: __Chantiers
+'Formulaire d''ajout du chantier': '__Formulaire d''ajout du chantier'
+'veuillez bien remplir les champs': '__veuillez bien remplir les champs'
+'La date de fin doit être supérieure ou égale à la date de début': '__La date de fin doit être supérieure ou égale à la date de début'
+'Nom du chantier': '__Nom du chantier'
+Localisation: __Localisation
+'Date début': '__Date début'
+'Date de Fin': '__Date de Fin'
+Statut: __Statut
+Référence: __Référence
+'Motif d''annulation': '__Motif d''annulation'
+'La date d''arrivée doit être supérieure ou égale à la date de départ': '__La date d''arrivée doit être supérieure ou égale à la date de départ'
+Matériel: __Matériel
+'Date de départ': '__Date de départ'
+'Départ du': '__Départ du'
+Vers: __Vers
+Emetteur: __Emetteur
+Livreur: __Livreur
+'Date d''arrivé': '__Date d''arrivé'
+Récepteur: __Récepteur
+'Livré par': '__Livré par'
+'Nom du Dépôt': '__Nom du Dépôt'
+'Raison sociale': '__Raison sociale'
+Adresse: __Adresse
+Tél: __Tél
+Fax: __Fax
+Email: __Email
+'Site web': '__Site web'
+Commentaires: __Commentaires
+Intervenant: __Intervenant
+'Type d''intervention': '__Type d''intervention'
+'Nom du matériel': '__Nom du matériel'
+'Date d''achat': '__Date d''achat'
+Fournisseur: __Fournisseur
+Immatriculation: __Immatriculation
+'Numéro de serie': '__Numéro de serie'
+'Prix d''chat': '__Prix d''chat'
+'Durée de vie': '__Durée de vie'
+Facture: __Facture
+Fichiers: __Fichiers
+'Nature de l''intervention': '__Nature de l''intervention'
+'Nom de l''ouvrier': '__Nom de l''ouvrier'
+CIN: __CIN
+'Vous ne pourrez plus pointer ce matériel. Il a atteint sa durée de vie limite.': '__Vous ne pourrez plus pointer ce matériel. Il a atteint sa durée de vie limite.'
+'Veuillez entrer une valeure qui ne dépasse pas': '__Veuillez entrer une valeure qui ne dépasse pas'
+heure(s): __heure(s)
+Emplacement: __Emplacement
+Par: __Par
+'Pointé le': '__Pointé le'
+'Durée d''utilisation': '__Durée d''utilisation'
+'Nature d''intervention': '__Nature d''intervention'
+Seuil: __Seuil
+'Valeur du cycle': '__Valeur du cycle'

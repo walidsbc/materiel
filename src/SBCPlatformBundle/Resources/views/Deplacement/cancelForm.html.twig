@@ -1,0 +1,33 @@
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        {{ form_label(form.reference, "Référence"|trans) }}
+                        {{ form_widget(form.reference, {'attr': {'class': 'md-input', 'required':''}}) }}
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.reference) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    <div class="parsley-row">
+                        {{ form_label(form.reason, "Motif d'annulation"|trans) }}
+                        {{ form_widget(form.reason, {'attr': {'class': 'md-input', 'name':'Motif d\'annulation', 'cols':'10', 'rows':'8', 'data-parsley-trigger':'keyup', 'data-parsley-minlength':'20', 'data-parsley-maxlength':'100', 'data-parsley-validation-threshold':'10', 'data-parsley-minlength-message':'Come on! You need to enter at least a 20 caracters long comment..'}}) }}
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red"> {{ form_errors(form.reason) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

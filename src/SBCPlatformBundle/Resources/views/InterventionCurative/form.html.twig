@@ -1,0 +1,92 @@
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <span class="uk-form-help-block">
+                            {{ form_label(form.materiel, "Matériel"|trans) }}
+                        </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.materiel, {'attr': {'required':''}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.materiel) }} </span>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                          <span class="uk-form-help-block">
+                              {{ form_label(form.natureintervention, "Nature d\'intervention"|trans) }}
+                          </span>
+                        {{ form_widget(form.natureintervention, {'attr': {'required':''}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.natureintervention) }} </span>
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                          <span class="uk-form-help-block">
+                              {{ form_label(form.interferedby, "Intervenant"|trans) }}
+                          </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.interferedby, {'attr': {'required':''}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.interferedby) }} </span>
+                </div>
+
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $('.select').kendoComboBox({
+            filter: "contains",
+            suggest: true
+        });
+
+        $('#sbcplatformbundle_intervention_curative_materiel').kendoComboBox({
+            placeholder: 'Choisir un matériel',
+            autoBind: false,
+            dataTextField: "text",
+            dataValueField: "id",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: '{{ path('materiel_liste_for_select2') }}'
+                    }
+                }
+            }
+        });
+        $('#sbcplatformbundle_intervention_curative_interferedby').kendoComboBox({
+            placeholder: 'Choisir l\'intervenant',
+            autoBind: false,
+            dataTextField: "text",
+            dataValueField: "id",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: '{{ path('ouvrier_liste_for_select2') }}'
+                    }
+                }
+            }
+        });
+    });
+</script>

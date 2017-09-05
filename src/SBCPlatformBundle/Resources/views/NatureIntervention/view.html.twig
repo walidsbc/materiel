@@ -1,0 +1,82 @@
+{% extends "::layout.html.twig" %}
+{% block title %}
+    Lecture d'une nature d'intervention - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>{{ natureIntervention.name }}</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">Nature d'intervention</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-xLarge-8-10 uk-width-large-10-10">
+                <div class="md-card">
+                    <div class="md-card-toolbar">
+                        <h3 class="md-card-toolbar-heading-text">
+                            Détails de la nature d'intervention
+                        </h3>
+                    </div>
+                    <div class="md-card-content">
+                        <ul class="md-list">
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Nature de l'intervention </span>
+                                    <span class="md-list-heading uk-text-large">{{ natureIntervention.name }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Créée le </span>
+                                    <span class="md-list-heading uk-text-large">{{ natureIntervention.creationdate|date("d/m/Y") }}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="md-fab-wrapper md-fab-speed-dial">
+        <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}"
+           title="Actions"><i
+                    class="material-icons">&#xE55D;</i>
+        </a>
+        <div class="md-fab-wrapper-small">
+            <a class="md-fab md-fab-small md-fab-danger" href="javascript:void(0)"
+               data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Supprimer"
+               onclick="UIkit.modal.confirm('Voulez vous vraiment supprimer cette nature d\'intervention ?',
+                       function(){
+                       var url = '{{ path('natureintervention_delete', {'id': 'idNatureIntervention'}) }}';
+                       url = url.replace('idNatureIntervention', {{ natureIntervention.id }});
+                       $.ajax({
+                       url: url,
+                       type: 'delete',
+                       success: function (result) {
+                       if (result.success) {
+                       UIkit.modal.alert('La nature d\'intervention a été supprimée avec succès.'
+
+                       ).on('hide.uk.modal', function() {
+                       history.back();
+                       });
+                       }
+                       },
+                       error: function (e) {
+                       console.log(e.responseText);
+                       UIkit.modal.alert('Vous n\'avez pas le droit de supprimer cette nature d\'intervention, elle est utilisée dans un type d\'intervention.');;
+                       }
+                       });
+
+                       });"
+            ><i class="material-icons">&#xE92B;</i>
+            </a>
+            <a class="md-fab md-fab-small md-fab-success"
+               href="{{ path('natureintervention_edit', {'id': natureIntervention.id}) }}"
+               data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Modifier">
+                <i class="material-icons">&#xE3C9;</i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+{% endblock %}

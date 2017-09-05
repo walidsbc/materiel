@@ -1,0 +1,76 @@
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                       <span class="uk-form-help-block">
+                           {{ form_label(form.planificationPreventive, "Planification"|trans) }}
+                       </span>
+
+                        {{ form_widget(form.planificationPreventive, {'attr': {'required':''}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.planificationPreventive) }} </span>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <span class="uk-form-help-block">
+                            {{ form_label(form.interferedby, "Intervenant"|trans) }}
+                        </span>
+                    </div>
+                    <div class="parsley-row">
+                        {{ form_widget(form.interferedby, {'attr': { 'required':''}}) }}
+                    </div>
+                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.interferedby) }} </span>
+                </div>
+            </div>
+
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+        $('#sbcplatformbundle_intervention_preventive_planificationPreventive').kendoComboBox({
+            placeholder: 'Choisir la planification',
+            autoBind: false,
+            dataTextField: "text",
+            dataValueField: "id",
+            filter: "contains",
+            suggest: true,
+            {#dataSource: {#}
+                {#transport: {#}
+                    {#read: {#}
+                        {#url: '{{ path('materiel_liste_for_select2') }}'#}
+                    {#}#}
+                {#}#}
+            {#}#}
+        });
+        $('#sbcplatformbundle_intervention_preventive_interferedby').kendoComboBox({
+            placeholder: 'Choisir l\'intervenant',
+            autoBind: false,
+            dataTextField: "text",
+            dataValueField: "id",
+            filter: "contains",
+            suggest: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: '{{ path('ouvrier_liste_for_select2') }}'
+                    }
+                }
+            }
+        });
+    });
+</script>

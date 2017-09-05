@@ -1,0 +1,298 @@
+<div id="page_content_inner">
+    <div class="md-card ">
+        <div class="md-card-content">
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    <ul class="uk-tab" data-uk-tab="{connect:'#tab1', animation:'slide-horizontal'}"
+                            {#data-uk-sticky="{ top: 130, left:0, media: 960 }"#}
+                        id="tabs_1">
+                        <li class="uk-active"><a href="#">Matériel</a></li>
+                        <li><a href="#">Plan. interv. préentives</a></li>
+                        <li class="named_tab"><a href="#">Pièces jointes</a></li>
+                    </ul>
+                    {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+                    {{ form_errors(form) }}
+                    <ul id="tab1" class="uk-switcher uk-margin">
+                        <li>
+                            <div class="uk-grid  uk-margin-top uk-grid-medium" data-uk-grid-margin>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.name, "Nom du matériel"|trans) }}
+                                        {{ form_widget(form.name, {'attr': {'class': 'md-input', 'required':'', 'data-parsley-name':'3'}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.name) }} </span>
+                                    </div>
+                                </div>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.reference, "Référence"|trans) }}
+                                        {{ form_widget(form.reference, {'attr': {'class': 'md-input', 'required':'', 'data-parsley-reference':'3'}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.reference) }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-large-1-2 uk-width-1-2">
+                                    <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i
+                                                class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                        <label for="uk_dp_1">{{ form_label(form.buydate, "Date d'achat"|trans) }}</label>
+                                        {{ form_widget(form.buydate, {'attr': {'class': 'md-input', 'id':'uk_dp_1', 'data-uk-datepicker':'{format:DD.MM.YYYY}'}}) }}
+                                        <span class="col-sm-4 control-label red">    {{ form_errors(form.buydate) }}</span>
+                                    </div>
+                                </div>
+                                <div class="uk-width-large-1-2 uk-width-1-2">
+                                    <div class="parsley-row">
+                                        <div class="parsley-row">
+                                            <span class="uk-form-help-block">
+                                                {{ form_label(form.fournisseur, "Fournisseur"|trans) }}
+                                            </span>
+                                        </div>
+                                        <div class="parsley-row">
+                                            {{ form_widget(form.fournisseur) }}
+                                        </div>
+                                    </div>
+                                    <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.fournisseur) }} </span>
+                                </div>
+                            </div>
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.registration, "Immatriculation"|trans) }}
+                                        {{ form_widget(form.registration, {'attr': {'class': 'md-input', 'required':'', 'data-parsley-registration':'3'}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.registration) }} </span>
+                                    </div>
+                                </div>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.serialnumber, "Numéro de serie"|trans) }}
+                                        {{ form_widget(form.serialnumber, {'attr': {'class': 'md-input', 'required':'', 'data-parsley-serialnumber':'3'}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.serialnumber) }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.buyprice, "Prix d'chat"|trans) }}
+                                        {{ form_widget(form.buyprice, {'attr': {'class': 'md-input masked_input ', 'required':''}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.buyprice) }} </span>
+                                    </div>
+                                </div>
+                                <div class="uk-width-medium-1-2">
+                                    <div class="parsley-row">
+                                        {{ form_label(form.lifetime, "Durée de vie"|trans) }}
+                                        {{ form_widget(form.lifetime, {'attr': {'class': 'md-input', 'required':''}}) }}
+                                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.lifetime) }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            {#<div class="uk-grid" data-uk-grid-margin>#}
+                                {#<div class="uk-width-medium-1-2">#}
+                                    {#<span class="uk-form-help-block">#}
+                                        {#{{ form_label(form.factureFile, "Facture"|trans) }}#}
+                                    {#</span>#}
+                                    {#{{ form_widget(form.factureFile, {'attr': {'class': 'dropify-fr', 'data-default-file': materiel.factureName }}) }}#}
+                                    {#<span class="col-md-6 col-sm-4 col-xs-12 control-label red"> {{ form_errors(form.factureFile) }} </span>#}
+                                {#</div>#}
+                            {#</div>#}
+                        </li>
+                        <li>
+                            <div class="uk-margin-top">
+                                {% if materiel.id == 0 or form.planifications|length ==0 %}
+                                    {{ form_widget(form.planifications, {'attr': { 'class':'uk-grid'}}) }}
+                                {% else %}
+                                    <div id="{{ form.planifications.vars.id }}" class="uk-grid" data-uk-grid-margin
+                                         data-prototype="{{ form_widget(form.planifications.vars.prototype)|e('html_attr') }}">
+                                        {% for planification in form.planifications %}
+                                            <div class="uk-width-medium-1-3 blockSection">
+                                                <div class="uk-form-row">
+                                                    <div class="parsley-row">
+                                                        <span class="uk-form-help-block">
+                                                            {{ form_label(planification.natureintervention, "Nature intervention") }}
+                                                        </span>
+                                                        {{ form_widget(planification.natureintervention) }}
+                                                        <span>{{ form_errors(planification.natureintervention) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="parsley-row">
+                                                        {{ form_label(planification.threshold, "Seuil") }}
+                                                        {{ form_widget(planification.threshold, {'attr': {'class': 'md-input'}}) }}
+                                                        <span>{{ form_errors(planification.threshold) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="parsley-row">
+                                                        {{ form_label(planification.cyclevalue, "Valeur du cycle") }}
+                                                        {{ form_widget(planification.cyclevalue, {'attr': {'class': 'md-input'}}) }}
+                                                        <span>{{ form_errors(planification.cyclevalue) }}</span>
+                                                    </div>
+                                                </div>
+                                                <a class="btn-close">
+                                                    <i class="material-icons md-24">&#xE872;</i>
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <a id="addPlanification"><i class="material-icons md-24">&#xE146;</i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-margin-top">
+                                {% if materiel.id == 0 or form.files|length ==0 %}
+                                    {{ form_widget(form.files, {'attr': { 'class':'uk-grid'}}) }}
+                                {% else %}
+                                    <div id="{{ form.files.vars.id }}" class="uk-grid" data-uk-grid-margin
+                                         data-prototype="{{ form_widget(form.files.vars.prototype)|e('html_attr') }}">
+                                        {% for file in form.files %}
+                                            <div class="uk-width-medium-1-4 blockSection">
+                                                <div class="uk-form-row">
+                                                    <div class="parsley-row">
+                                                        <span class="uk-form-help-block">  <label>Image</label></span>
+                                                        {% set urle = asset('fichiers/autres/materiels/')~  materiel.files.get(loop.index-1).fileName %}
+                                                        {{ form_widget(file.file,
+                                                        {'attr': {'class': 'dropify-fr', 'data-default-file': urle }}) }}
+                                                        <span>{{ form_errors(file.file) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="parsley-row">
+                                                        {{ form_label(file.description, "Déscription de l'image") }}
+                                                        {{ form_widget(file.description, {'attr': {'class': 'md-input'}}) }}
+                                                        <span>{{ form_errors(file.description) }}</span>
+                                                    </div>
+                                                </div>
+                                                <a class="btn-close">
+                                                    <i class="material-icons md-24">&#xE872;</i>
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <a id="addFile"><i class="material-icons md-24">&#xE146;</i></a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-1-1">
+                            {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+        $('.select').kendoComboBox({
+            filter: "contains",
+            suggest: true
+        });
+        var planificationsDOM = $('#' + '{{ form.planifications.vars.id }}');
+        var filesDOM = $('#' + '{{ form.files.vars.id }}');
+        var buildPrototypes = {
+            counterPlanifications: planificationsDOM.children().length,
+            prototypePlanifications: planificationsDOM.attr('data-prototype'),
+            planifications: planificationsDOM,
+            counterFiles: filesDOM.children().length,
+            prototypeFiles: filesDOM.attr('data-prototype'),
+            files: filesDOM,
+            init: function () {
+                $('#addFile').on('click', function () {
+                    buildPrototypes.buildFileSection();
+                });
+                $('#addPlanification').on('click', function () {
+                    buildPrototypes.buildPlanificationSection();
+                });
+                $('.btn-close').on('click', function () {
+                    this.closest('div').remove();
+                });
+            },
+            buildPlanificationSection: function () {
+                this.counterPlanifications++;
+                prototypePlanificationsDOM = $('<div/>').html(this.prototypePlanifications).contents();
+                var temp = SFCollectionAnalyzer.buildTemplate(prototypePlanificationsDOM, templatePlanification());
+                var block = temp.replace(/__name__/g, this.counterPlanifications);
+                this.planifications.append(block);
+                this.planifications.find('select').kendoComboBox({
+                    filter: "contains",
+                    suggest: true
+                });
+                this.reInit();
+            },
+            buildFileSection: function () {
+                this.counterFiles++;
+                var prototypeFilesDOM = $('<div/>').html(this.prototypeFiles).contents();
+                var temp = SFCollectionAnalyzer.buildTemplate(prototypeFilesDOM, templateFile());
+                var block = temp.replace(/__name__/g, this.counterFiles);
+                this.files.append(block);
+                this.reInit();
+            },
+            reInit: function () {
+                $('.btn-close').on('click', function () {
+                    this.closest('div').remove();
+                });
+                altair_md.init();
+                this.files.find('input[type=file]').dropify({
+                    messages: {
+                        'default': 'Cliquez ou glissez / déposez un fichier ici',
+                        'replace': 'Cliquez ou glissez / déposez un fichier ici pour remplacer',
+                        'remove': 'Supprimer',
+                        'error': 'Une erreur s\'est survenue'
+                    }
+                });
+            }
+        };
+        buildPrototypes.init();
+    });
+    function templateFile() {
+        return '<div class="uk-width-medium-1-4 bloc">' +
+            '<div class="uk-form-row">' +
+            '<div class="parsley-row">' +
+            '<span class="uk-form-help-block"><label>Image</label></span>' +
+            '#file#' +
+            '<span></span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="uk-form-row">' +
+            '<div class="parsley-row">' +
+            '<label>Déscription de l\'image</label>' +
+            '#description#' +
+            '<span></span>' +
+            '</div>' +
+            '</div>' +
+            '<a class="btn-close"><i class="material-icons md-24">&#xE872;</i></a>' +
+            '</div>'
+            ;
+    }
+    function templatePlanification() {
+        return '<div class="uk-width-medium-1-3 bloc">' +
+            '<div class="uk-form-row">' +
+            '<div class="parsley-row">' +
+            '<span class="uk-form-help-block"><label>Nature d\'intervention</label></span>' +
+            '#natureintervention#' +
+            '</div>' +
+            '</div>' +
+            '<div class="uk-form-row">' +
+            '<div class="parsley-row">' +
+            '<label>Seuil</label>' +
+            '#threshold#' +
+            '</div>' +
+            '</div>' +
+            '<div class="uk-form-row">' +
+            '<div class="parsley-row">' +
+            '<label>Valeur du cycle</label>' +
+            '#cyclevalue#' +
+            '</div>' +
+            '</div>' +
+            '<a class="btn-close"><i class="material-icons md-24">&#xE872;</i></a>' +
+            '</div>'
+            ;
+    }
+</script>

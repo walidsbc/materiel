@@ -1,0 +1,95 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    Liste des interventions preventives - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Liste des interventions preventives</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">Liste de toutes les interventions preventives</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="md-card uk-margin-medium-bottom">
+            <div class="md-card-content">
+                <div class="dt_colVis_buttons"></div>
+                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Intervenant</th>
+                        <th>Date d'intervention</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for intervention in listInterventions %}
+                        <tr>
+
+                            <td>  {{ intervention.interferedby }}</td>
+                            <td>  {{ intervention.creationdate|date("d/m/Y") }}</td>
+                            <td>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <a title="Afficher" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                       href="{{ path('intervention_preventive_view', {'id': intervention.id}) }}">
+                                        <i class="md-icon material-icons">&#xE417;</i>
+                                    </a>
+
+                                    {#<a title="Modifier" href="{{ path('intervention_edit', {'id': intervention.id}) }}"><i#}
+                                    {#class="md-icon material-icons"></i></a>#}
+
+                                    {#<a title="Supprimer" href="#"#}
+                                    {#onclick="UIkit.modal.confirm('Voulez vous vraiment supprimer cette intervention ?',#}
+                                    {#function(){#}
+                                    {#var url = '{{ path('intervention_delete', {'id': 'idIntervention'}) }}';#}
+                                    {#url = url.replace('idIntervention', {{ intervention.id }});#}
+                                    {#$.ajax({#}
+                                    {#url: url,#}
+                                    {#type: 'delete',#}
+                                    {#success: function (result) {#}
+                                    {#if (result.success) {#}
+                                    {#UIkit.modal.alert('L\'intervention a été supprimée avec succès.'#}
+                                    {#).on('hide.uk.modal', function() {#}
+                                    {#location.reload(true);#}
+                                    {#});#}
+                                    {#}#}
+                                    {#},#}
+                                    {#error: function (e) {#}
+                                    {#console.log(e.responseText);#}
+                                    {#UIkit.modal.alert('Vous n\'avez pas le droit de supprimer cette intervention, elle est utilisée dans 33333333.');;#}
+                                    {#}#}
+                                    {#});#}
+                                    {#});"#}
+                                    {#>#}
+                                    {#<i#}
+                                    {#class="md-icon material-icons"#}
+                                    {#>&#xE872;</i>#}
+
+                                    {#</a>#}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainIndex.js"
+    'bundles/sbcplatform/bower_components/datatables/media/js/jquery.dataTables.min.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/dataTables.buttons.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/buttons.uikit.js'
+    'bundles/sbcplatform/bower_components/jszip/dist/jszip.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/pdfmake.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/vfs_fonts.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.colVis.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.html5.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.print.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/datatables.uikit.min.js'
+    'bundles/sbcplatform/assets/js/pages/plugins_datatables.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

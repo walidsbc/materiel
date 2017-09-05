@@ -1,0 +1,109 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    Liste des matériels - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Liste des matériels</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">Liste de tous les matériels</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="md-card uk-margin-medium-bottom">
+            <div class="md-card-content">
+                <div class="dt_colVis_buttons"></div>
+                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Référence</th>
+                        <th>Fournisseur</th>
+                        <th>Date d'achat</th>
+                        <th>Prix d'achat</th>
+                        <th>Durée de vie</th>
+                        <th>Coût de l'unité</th>
+                        <th>Durée de vie restante</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for materiel in listMateriels %}
+                        <tr>
+                            <td>  {{ materiel.name }}</td>
+                            <td>  {{ materiel.reference }}</td>
+                            <td>  {{ materiel.fournisseur.companyname }}</td>
+                            <td>  {{ materiel.buydate|date('d/m/Y') }}</td>
+                            <td>  {{ materiel.buyprice }} TND</td>
+                            <td>  {{ materiel.lifetime }} Heure(s)</td>
+                            <td>  {{ materiel.unitcost }} TND/Heure</td>
+                            <td>  {{ materiel.lifetimeremaining }} Heure(s)</td>
+                            <td>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <a title="Afficher" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                       href="{{ path('materiel_view', {'id': materiel.id}) }}">
+                                        <i class="md-icon material-icons">&#xE417;</i>
+                                    </a>
+                                    <a title="Modifier" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                       href="{{ path('materiel_edit', {'id': materiel.id}) }}">
+                                        <i class="md-icon material-icons"></i>
+                                    </a>
+                                    {% if materiel.activated %}
+                                        <a title="Désactiver" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                           href="{{ path('materiel_desactiver', {'id': materiel.id}) }}">
+                                            <i class="md-icon material-icons">&#xE5C9;</i>
+                                        </a>
+                                    {% endif %}
+                                    <a title="Supprimer" href="#" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                       onclick="UIkit.modal.confirm('Voulez vous vraiment supprimer ce matériel ?',
+                                               function(){
+                                               var url = '{{ path('materiel_delete', {'id': 'idMateriel'}) }}';
+                                               url = url.replace('idMateriel', {{ materiel.id }});
+                                               $.ajax({
+                                               url: url,
+                                               type: 'delete',
+                                               success: function (result) {
+                                               if (result.success) {
+                                               UIkit.modal.alert('Le matériel a été supprimé avec succès.'
+                                               ).on('hide.uk.modal', function() {
+                                               location.reload(true);
+                                               });
+                                               }
+                                               },
+                                               error: function (e) {
+                                               console.log(e.responseText);
+                                               UIkit.modal.alert('Vous n\'avez pas le droit de supprimer ce matériel, il est utilisé dans un transfert ou un pointage.');;
+                                               }
+                                               });
+
+                                               });"
+                                    ><i class="md-icon material-icons">&#xE872;</i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainIndex.js"
+    'bundles/sbcplatform/bower_components/datatables/media/js/jquery.dataTables.min.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/dataTables.buttons.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/buttons.uikit.js'
+    'bundles/sbcplatform/bower_components/jszip/dist/jszip.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/pdfmake.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/vfs_fonts.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.colVis.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.html5.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.print.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/datatables.uikit.min.js'
+    'bundles/sbcplatform/assets/js/pages/plugins_datatables.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

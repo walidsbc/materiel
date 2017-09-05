@@ -1,0 +1,57 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    Liste des couts par emplacement - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Liste des couts</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">Liste des couts par emplacement</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="md-card uk-margin-medium-bottom">
+            <div class="md-card-content">
+                <div class="dt_colVis_buttons"></div>
+                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Emplacement</th>
+                        <th>Matériel</th>
+                        <th>Durée d'utilisation</th>
+                        <th>Cout total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cout in listCouts %}
+                        <tr>
+                            <td>  {{ cout.0.emplacement.name }}</td>
+                            <td>  {{ cout.0.materiel.name }}</td>
+                            <td>  {{ cout.totale }} Heure(s)</td>
+                            <td>  {{ cout.totale * cout.0.materiel.unitcost }} (TND)</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainIndex.js"
+    'bundles/sbcplatform/bower_components/datatables/media/js/jquery.dataTables.min.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/dataTables.buttons.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/buttons.uikit.js'
+    'bundles/sbcplatform/bower_components/jszip/dist/jszip.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/pdfmake.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/vfs_fonts.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.colVis.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.html5.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.print.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/datatables.uikit.min.js'
+    'bundles/sbcplatform/assets/js/pages/plugins_datatables.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

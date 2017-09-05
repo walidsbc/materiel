@@ -1,0 +1,143 @@
+{% extends "::layout.html.twig" %}
+{% block title %}
+    Lecture d'un transfert - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>{{ deplacement.reference }}</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">{{ deplacement.materiel.name }}</span>
+    </div>
+    <div id="page_content_inner">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-xLarge-8-10 uk-width-large-10-10">
+                <div class="md-card">
+                    <div class="md-card-toolbar">
+                        <h3 class="md-card-toolbar-heading-text">
+                            Détails du transfert
+                        </h3>
+                    </div>
+                    <div class="md-card-content">
+                        <ul class="md-list">
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Référence du transfert</span>
+                                    <span class="md-list-heading uk-text-large">{{ deplacement.reference }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Nom du matériel </span>
+                                    <span class="md-list-heading uk-text-large">{{ deplacement.materiel.name }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Référence</span>
+                                    <span class="md-list-heading uk-text-large">{{ deplacement.materiel.reference }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Transfert du </span>
+                                    <span class="md-list-heading uk-text-large"> {{ deplacement.currentlocation.name }}
+                                        - {{ deplacement.currentlocation.code }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Transfert vers</span>
+                                    <span class="md-list-heading uk-text-large">{{ deplacement.destinatedlocation.name }}
+                                        - {{ deplacement.destinatedlocation.code }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Date départ</span>
+                                    <span class="md-list-heading uk-text-large"> {{ deplacement.departuredate|date('d/m/Y') }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Transmit par</span>
+                                    <span class="md-list-heading uk-text-large"> {{ deplacement.transmitter.name }}
+                                        - {{ deplacement.transmitter.code }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Livreur</span>
+                                    <span class="md-list-heading uk-text-large"> {{ deplacement.deliverer.name }}
+                                        - {{ deplacement.deliverer.code }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="uk-text-small uk-text-muted uk-display-block">Statut</span>
+                                    <span class="md-list-heading uk-text-large"> {{ deplacement.status }}</span>
+                                </div>
+                            </li>
+                            {% if deplacement.status == 'Arrivé' %}
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="uk-text-small uk-text-muted uk-display-block">Date d'arrivée</span>
+                                        <span class="md-list-heading uk-text-large"> {{ deplacement.arriveddate|date('d/m/Y') }}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="uk-text-small uk-text-muted uk-display-block">Reçu par </span>
+                                        <span class="md-list-heading uk-text-large">{{ deplacement.receiver.name }}
+                                            - {{ deplacement.receiver.code }} </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="uk-text-small uk-text-muted uk-display-block">Livré par</span>
+                                        <span class="md-list-heading uk-text-large">{{ deplacement.deliveredby.name }}
+                                            - {{ deplacement.deliveredby.code }}</span>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            {% if deplacement.cancelled == true %}
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="uk-text-small uk-text-muted uk-display-block">Annulé</span>
+                                        <span class="md-list-heading uk-text-large"> Oui </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="md-list-content">
+                                        <span class="uk-text-small uk-text-muted uk-display-block">Motif d'annulation</span>
+                                        <span class="md-list-heading uk-text-large">{{ deplacement.reason }}</span>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="md-fab-wrapper md-fab-speed-dial">
+        <a class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-tooltip="{pos:'right'}"
+           title="Actions"><i
+                    class="material-icons">&#xE55D;</i></a>
+        <div class="md-fab-wrapper-small">
+            {% if deplacement.arriveddate == null and deplacement.cancelled == false %}
+                <a class="md-fab md-fab-small md-fab-success"
+                   href="{{ path('deplacement_cloturer', {'id': deplacement.id}) }}"
+                   data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Cloturer"><i class="material-icons">
+                        &#xE8AC;</i></a>
+            {% endif %}
+            {% if ( deplacement.cancellable ) %}
+                <a class="md-fab md-fab-small md-fab-default"
+                   href="{{ path('deplacement_cancel', {'id': deplacement.id}) }}"
+                   data-uk-tooltip="{cls:'uk-tooltip-small',pos:'left'}" title="Annuler"><i class="material-icons">
+                        &#xE5C9;</i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+{% endblock %}

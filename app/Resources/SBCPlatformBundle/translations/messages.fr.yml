@@ -1,0 +1,69 @@
+'La date de fin doit être supérieure ou égale à la date de début': 'La date de fin doit être supérieure ou égale à la date de début'
+'Nom du chantier': 'Nom du chantier'
+Localisation: Localisation
+'Date début': 'Date début'
+'Date de Fin': 'Date de Fin'
+Statut: Statut
+'Ajouter un chantier': 'Ajouter un chantier'
+Chantiers: Chantiers
+'Formulaire d''ajout du chantier': 'Formulaire d''ajout du chantier'
+'veuillez bien remplir les champs': 'veuillez bien remplir les champs'
+Save: Enregistrer
+'En préparation': 'En préparation'
+'En cours': 'En cours'
+Cloturé: Cloturé
+'Nom du Dépôt': 'Nom du Dépôt'
+'Nom de l''ouvrier': 'Nom de l''ouvrier'
+CIN: CIN
+Tél: Tél
+'Nature de l''intervention': 'Nature de l''intervention'
+'Nom du matériel': 'Nom du matériel'
+Référence: Référence
+'Date d''achat': 'Date d''achat'
+Fournisseur: Fournisseur
+Immatriculation: Immatriculation
+'Numéro de serie': 'Numéro de serie'
+'Prix d''chat': 'Prix d''chat'
+'Durée de vie': 'Durée de vie'
+Facture: Facture
+Fichiers: Fichiers
+'La date d''arrivée doit être supérieure ou égale à la date de départ': 'La date d''arrivée doit être supérieure ou égale à la date de départ'
+Matériel: Matériel
+'Date de départ': 'Date de départ'
+'Départ du': 'Départ du'
+Vers: Vers
+Emetteur: Emetteur
+Livreur: Livreur
+'Date d''arrivé': 'Date d''arrivé'
+Récepteur: Récepteur
+'Livré par': 'Livré par'
+'En départ': 'En départ'
+Arrivé: Arrivé
+'Choisir ...': 'Choisir ...'
+'Motif d''annulation': 'Motif d''annulation'
+'Raison sociale': 'Raison sociale'
+Adresse: Adresse
+Fax: Fax
+Email: Email
+'Site web': 'Site web'
+Commentaires: Commentaires
+'Vous ne pourrez plus pointer ce matériel. Il a atteint sa durée de vie limite.': 'Vous ne pourrez plus pointer ce matériel. Il a atteint sa durée de vie limite.'
+'Veuillez entrer une valeure qui ne dépasse pas': 'Veuillez entrer une valeure qui ne dépasse pas'
+heure(s): heure(s)
+Emplacement: Emplacement
+Par: Par
+'Pointé le': 'Pointé le'
+'Durée d''utilisation': 'Durée d''utilisation'
+Intervenant: Intervenant
+'Type d''intervention': 'Type d''intervention'
+'Nature d''intervention': 'Nature d''intervention'
+Seuil: Seuil
+'Valeur du cycle': 'Valeur du cycle'
+Description: Description
+File: Fichier
+Natureintervention: Natureintervention
+Materiel: Materiel
+__name__label__: __name__label__
+Reclassé: Reclassé
+Introuvale: Introuvale
+Perdu: Perdu

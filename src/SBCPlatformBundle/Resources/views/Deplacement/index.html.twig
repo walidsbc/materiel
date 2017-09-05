@@ -1,0 +1,134 @@
+{% extends "::layout.html.twig" %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    Liste des transferts - {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
+        <h1>Liste des transferts</h1>
+        <span class="uk-text-muted uk-text-upper uk-text-small">Liste des transferts {% if cancelled == false %}non {% endif %}
+            annulés</span>
+    </div>
+    <div id="page_content_inner">
+        {% if  cancelled == false %}
+            {#{% for flash_message in app.session.flashBag.get('notice') %}#}
+            {% if deplacementEnAttente >0 %}
+                <div class="uk-width-1-1">
+                    <div class="uk-alert uk-alert-danger" data-uk-alert>
+                        <a href="#" class="uk-alert-close uk-close"></a>
+                        Il y a <strong>{{ deplacementEnAttente }}</strong> transfert(s) en attente
+                    </div>
+                </div>
+            {% else %}
+                <div class="uk-width-1-1">
+                    <div class="uk-alert uk-alert-success" data-uk-alert>
+                        <a href="#" class="uk-alert-close uk-close"></a>
+                        Il n'y a aucun transfert en attente
+                    </div>
+                </div>
+            {% endif %}
+            {#{% endfor %}#}
+        {% endif %}
+        <div class="md-card uk-margin-medium-bottom">
+            <div class="md-card-content">
+                <div class="dt_colVis_buttons"></div>
+                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Date d'entrée</th>
+                        <th>Matériel</th>
+                        <th>Evénnement</th>
+                        <th>Date événement</th>
+                        <th>Départ de</th>
+                        <th>Vers</th>
+                        <th>Etat</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for deplacement in listDeplacements %}
+                        <tr {% if deplacement.arriveddate == null and deplacement.cancelled == false %} style="background-color:#E86052; color:white;" {% endif %}>
+                            <td>  {{ deplacement.reference }}</td>
+                            <td>  {{ deplacement.creationdate|date('d/m/Y') }}</td>
+                            <td>  {{ deplacement.materiel.name }}</td>
+                            <td>  {{ deplacement.status }}</td>
+                            {% if deplacement.status == 'Arrivé' %}
+                                <td>  {{ deplacement.arriveddate|date('d/m/Y') }}</td>
+                            {% else %}
+                                <td>  {{ deplacement.departuredate|date('d/m/Y') }} </td>
+                            {% endif %}
+                            <td>  {{ deplacement.currentlocation.name }}</td>
+                            <td>  {{ deplacement.destinatedlocation.name }}</td>
+                            <td>    {% if deplacement.arriveddate %}
+                                    OK
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <a title="Afficher" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                       href="{{ path('deplacement_view', {'id': deplacement.id}) }}">
+                                        <i class="md-icon material-icons">&#xE417;</i></a>
+
+                                    {% if deplacement.arriveddate == null and deplacement.cancelled == false %}
+                                        <a title="Cloturer" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                           href="{{ path('deplacement_cloturer', {'id': deplacement.id}) }}"
+                                        >
+                                            <i class="md-icon material-icons">&#xE8BA;</i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if ( deplacement.cancellable ) %}
+                                        <a title="Annuler" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'top'}"
+                                           href="{{ path('deplacement_cancel', {'id': deplacement.id}) }}">
+                                            <i class="md-icon material-icons">&#xE5C9;</i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts output="js/compiled/mainIndex.js"
+    'bundles/sbcplatform/bower_components/datatables/media/js/jquery.dataTables.min.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/dataTables.buttons.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/buttons.uikit.js'
+    'bundles/sbcplatform/bower_components/jszip/dist/jszip.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/pdfmake.min.js'
+    'bundles/sbcplatform/bower_components/pdfmake/build/vfs_fonts.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.colVis.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.html5.js'
+    'bundles/sbcplatform/bower_components/datatables-buttons/js/buttons.print.js'
+    'bundles/sbcplatform/assets/js/custom/datatables/datatables.uikit.min.js'
+    'bundles/sbcplatform/assets/js/pages/plugins_datatables.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {#<script>#}
+    {#$(document).ready(function () {#}
+    {#$('#datatable-responsive').DataTable({#}
+    {#"order": [[7, "asc"]],#}
+    {#"columnDefs": [#}
+    {#{#}
+    {#"targets": [7],#}
+    {#"visible": false#}
+    {#}#}
+    {#]#}
+    {#});#}
+    {#$datatable.dataTable({#}
+    {#'order': [[1, 'asc']],#}
+    {#'columnDefs': [#}
+    {#{orderable: false, targets: [0]}#}
+    {#]#}
+    {#});#}
+    {#});#}
+    {#</script>#}
+{% endblock %}

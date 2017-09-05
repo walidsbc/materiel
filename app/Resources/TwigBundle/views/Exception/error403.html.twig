@@ -1,0 +1,28 @@
+{% block css %}
+    <link rel='stylesheet' media="screen" type='text/css'
+          href="{{ asset('bundles/sbcplatform/bower_components/uikit/css/uikit.almost-flat.min.css') }} "/>
+    <link rel='stylesheet' media="screen" type='text/css'
+          href="{{ asset('bundles/sbcplatform/assets/css/error_page.min.css') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('iconeAGM.png') }}"/>
+{% endblock %}
+{% block title %}
+    Erreur 403 - AGM Matériel
+{% endblock %}
+{% block body %}
+    <body class="error_page">
+    <div class="error_page_header">
+        <div class="uk-width-8-10 uk-container-center">
+            403!
+        </div>
+    </div>
+    <div class="error_page_content">
+        <div class="uk-width-8-10 uk-container-center">
+            <p class="heading_b">Oops! Accès réfusé...</p>
+            <p class="uk-text-large">
+                Vous devez s'authentifier et avoir le droit pour accèder à cette page.
+            </p>
+
+        </div>
+    </div>
+    </body>
+{% endblock %}

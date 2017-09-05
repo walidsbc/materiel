@@ -1,0 +1,538 @@
+sbc_platform_homepage:
+    path:     /
+    defaults:
+        _controller: SBCPlatformBundle:Default:index
+
+depot_home:
+    path:      /depots/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Depot:index
+        page:        1
+    requirements:
+        page: \d*
+
+depot_view:
+    path:      /depot/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Depot:view
+    requirements:
+        id: \d*
+
+depot_add:
+    path:      /depot/add
+    defaults:  { _controller: SBCPlatformBundle:Depot:add }
+
+depot_edit:
+    path:      /depot/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Depot:edit }
+    requirements:
+        id: \d+
+
+depot_delete:
+    path:      /depot/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Depot:delete }
+
+
+chantier_home:
+    path:      /chantiers/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Chantier:index
+        page:        1
+    requirements:
+        page: \d*
+
+chantier_view:
+    path:      /chantier/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Chantier:view
+    requirements:
+        id: \d*
+
+chantier_add:
+    path:      /chantier/add
+    defaults:  { _controller: SBCPlatformBundle:Chantier:add }
+
+chantier_edit:
+    path:      /chantier/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Chantier:edit }
+    requirements:
+        id: \d+
+
+chantier_delete:
+    path:      /chantier/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Chantier:delete }
+
+chantier_setstatusfinished:
+    path:      /chantier/setstatusfinished/{id}
+    defaults:  { _controller: SBCPlatformBundle:Chantier:setstatusfinished }
+    requirements:
+        id: \d+
+
+chantier_setstatusstarted:
+    path:      /chantier/setstatusstarted/{id}
+    defaults:  { _controller: SBCPlatformBundle:Chantier:setstatusstarted }
+    requirements:
+        id: \d+
+
+materiel_home:
+    path:      /materiels/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:index
+        page:        1
+    requirements:
+        page: \d*
+
+materiel_view:
+    path:      /materiel/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:view
+    requirements:
+        id: \d*
+    options:
+        expose: true
+
+materiel_add:
+    path:      /materiel/add
+    defaults:  { _controller: SBCPlatformBundle:Materiel:add }
+
+materiel_edit:
+    path:      /materiel/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Materiel:edit }
+    requirements:
+        id: \d+
+
+materiel_desactiver:
+    path:      /desactiver-materiel/{id}
+    defaults:  { _controller: SBCPlatformBundle:Materiel:desactiver }
+    requirements:
+        id: \d+
+
+materiel_delete:
+    path:      /materiel/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Materiel:delete }
+
+materiel_byname:
+    path:      /matereiel/byname/{name}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:getMaterielByName
+
+materiel_byreference:
+    path:      /matereiel/byreference/{reference}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:getMaterielByReference
+
+materiel_byregistration:
+    path:      /matereiel/byregistration/{registration}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:getMaterielByRegistration
+
+materiel_byserialnumber:
+    path:      /matereiel/byserialnumber/{serialnumber}
+    defaults:
+        _controller: SBCPlatformBundle:Materiel:getMaterielBySerialnumber
+
+
+
+deplacement_home:
+    path:      /transferts/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Deplacement:index
+        page:        1
+    requirements:
+        page: \d*
+
+deplacement_cancelled:
+    path:      /transferts-annulés/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Deplacement:indexCancelled
+        page:        1
+    requirements:
+        page: \d*
+
+deplacement_view:
+    path:      /transfert/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Deplacement:view
+    requirements:
+        id: \d*
+
+
+deplacement_cancel:
+    path:      /transfert/cancel/{id}
+    defaults:  { _controller: SBCPlatformBundle:Deplacement:cancel }
+    requirements:
+        id: \d+
+
+deplacement_add:
+    path:      /transfert/add
+    defaults:  { _controller: SBCPlatformBundle:Deplacement:add }
+
+deplacement_cloturer:
+    path:      /cloturer-transfert/{id}
+    defaults:  { _controller: SBCPlatformBundle:Deplacement:cloturer }
+    requirements:
+            id: \d+
+
+
+
+
+
+fournisseur_home:
+    path:      /fournisseurs/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Fournisseur:index
+        page:        1
+    requirements:
+        page: \d*
+
+fournisseur_view:
+    path:      /fournisseur/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Fournisseur:view
+    requirements:
+        id: \d*
+
+fournisseur_add:
+    path:      /fournisseur/add
+    defaults:  { _controller: SBCPlatformBundle:Fournisseur:add }
+
+fournisseur_edit:
+    path:      /fournisseur/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Fournisseur:edit }
+    requirements:
+        id: \d+
+
+fournisseur_bycompanyname:
+    path:      /fournisseur/bycompanyname/{companyname}
+    defaults:
+        _controller: SBCPlatformBundle:Fournisseur:getFournisseurByCompanyName
+
+fournisseur_delete:
+    path:      /fournisseur/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Fournisseur:delete }
+
+
+
+
+
+ouvrier_home:
+    path:      /ouvriers/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Ouvrier:index
+        page:        1
+    requirements:
+        page: \d*
+
+ouvrier_view:
+    path:      /ouvrier/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Ouvrier:view
+    requirements:
+        id: \d*
+
+ouvrier_add:
+    path:      /ouvrier/add
+    defaults:  { _controller: SBCPlatformBundle:Ouvrier:add }
+
+ouvrier_edit:
+    path:      /ouvrier/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Ouvrier:edit }
+    requirements:
+        id: \d+
+
+ouvrier_delete:
+    path:      /ouvrier/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Ouvrier:delete }
+
+ouvrier_bycode:
+    path:      /ouvrier/bycode/{code}
+    defaults:
+        _controller: SBCPlatformBundle:Ouvrier:getOuvrierByCode
+
+ouvrier_bycin:
+    path:      /ouvrier/bycin/{cin}
+    defaults:
+        _controller: SBCPlatformBundle:Ouvrier:getOuvrierByCin
+
+ouvrier_byphonenumber:
+    path:      /ouvrier/byphonenumber/{phonenumber}
+    defaults:
+        _controller: SBCPlatformBundle:Ouvrier:getOuvrierByPhoneNumber
+
+pointage_home:
+    path:      /pointages/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Pointage:index
+        page:        1
+    requirements:
+        page: \d*
+
+pointage_view:
+    path:      /pointage/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Pointage:view
+    requirements:
+        id: \d*
+
+pointage_add:
+    path:      /pointage/add
+    defaults:  { _controller: SBCPlatformBundle:Pointage:add }
+
+pointage_edit:
+    path:      /pointage/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Pointage:edit }
+    requirements:
+        id: \d+
+
+
+fournisseur_liste_for_select2:
+    path:      /ajax-fournisseurs
+    defaults: { _controller: SBCPlatformBundle:Fournisseur:ajax}
+
+emplacement_liste_for_select2:
+    path:      /ajax-emplacements
+    defaults: { _controller: SBCPlatformBundle:Emplacement:ajax}
+
+
+materiel_liste_for_select2:
+    path:      /ajax-materiels
+    defaults: { _controller: SBCPlatformBundle:Materiel:ajaxWithJoinDeplacement}
+
+materiel_all_select2_join_deplacement:
+    path:      /all-materiels-with-delpacements
+    defaults: { _controller: SBCPlatformBundle:Materiel:allWithDeplcements}
+
+
+
+
+ouvrier_liste_for_select2:
+    path:      /ajax_ouvriers
+    defaults: { _controller: SBCPlatformBundle:Ouvrier:ajax}
+
+
+deplacement_lastdestinatedlocationofmateriel:
+    path:      /ajax_last-destinatedlocation-of-materiel
+    defaults: { _controller: SBCPlatformBundle:Deplacement:getLastDestinatedLocationOfMateriel}
+
+couts_emplacement:
+    path:      /couts/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Cout:coutParEmplacement
+        page:        1
+    requirements:
+        page: \d*
+
+
+materiels_liste_pointage:
+    path:      /ajax-materiels-for-pointage
+    defaults: { _controller: SBCPlatformBundle:Materiel:ajaxFindByRegNotExistInDeplacement}
+
+
+
+natureintervention_home:
+    path:      /natures-interventions/{page}
+    defaults:
+        _controller: SBCPlatformBundle:NatureIntervention:index
+        page:        1
+    requirements:
+        page: \d*
+
+natureintervention_view:
+    path:      /nature-intervention/{id}
+    defaults:
+        _controller: SBCPlatformBundle:NatureIntervention:view
+    requirements:
+        id: \d*
+
+natureintervention_add:
+    path:      /nature-intervention/add
+    defaults:  { _controller: SBCPlatformBundle:NatureIntervention:add }
+
+natureintervention_edit:
+    path:      /nature-intervention/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:NatureIntervention:edit }
+    requirements:
+        id: \d+
+
+natureintervention_delete:
+    path:      /nature-intervention/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:NatureIntervention:delete }
+
+natureintervention_byname:
+    path:      /nature-intervention/byname/{name}
+    defaults:
+        _controller: SBCPlatformBundle:NatureIntervention:getNatureInterventionByName
+
+
+
+typeintervention_home:
+    path:      /types-interventions/{page}
+    defaults:
+        _controller: SBCPlatformBundle:TypeIntervention:index
+        page:        1
+    requirements:
+        page: \d*
+
+typeintervention_view:
+    path:      /type-intervention/{id}
+    defaults:
+        _controller: SBCPlatformBundle:TypeIntervention:view
+    requirements:
+        id: \d*
+
+typeintervention_add:
+    path:      /type-intervention/add
+    defaults:  { _controller: SBCPlatformBundle:TypeIntervention:add }
+
+typeintervention_edit:
+    path:      /type-intervention/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:TypeIntervention:edit }
+    requirements:
+        id: \d+
+
+typeintervention_delete:
+    path:      /type-intervention/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:TypeIntervention:delete }
+
+typeintervention_liste_for_select2:
+    path:      /ajax-types-interventions
+    defaults: { _controller: SBCPlatformBundle:TypeIntervention:ajax}
+
+
+intervention_home:
+    path:      /interventions/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Intervention:index
+        page:        1
+    requirements:
+        page: \d*
+
+intervention_view:
+    path:      /intervention/{id}
+    defaults:
+        _controller: SBCPlatformBundle:Intervention:view
+    requirements:
+        id: \d*
+
+intervention_add:
+    path:      /intervention/add
+    defaults:  { _controller: SBCPlatformBundle:Intervention:add }
+
+intervention_edit:
+    path:      /intervention/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:Intervention:edit }
+    requirements:
+        id: \d+
+
+intervention_delete:
+    path:      /intervention/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:Intervention:delete }
+
+
+notification_home:
+    path:      /notifications/{page}
+    defaults:
+        _controller: SBCPlatformBundle:Notification:index
+        page:        1
+    requirements:
+        page: \d*
+
+notification_some:
+    path:      /some-notifications
+    defaults:
+        _controller: SBCPlatformBundle:Notification:someNotifications
+
+notification_edit:
+    path:      /notification/vues/
+    defaults:  { _controller: SBCPlatformBundle:Notification:edit }
+
+
+planification_prevention_home:
+    path:      /planifications-preventives/{page}
+    defaults:
+        _controller: SBCPlatformBundle:PlanificationPrevention:index
+        page:        1
+    requirements:
+        page: \d*
+
+
+planification_prevention_view:
+    path:      /planification-prevention/{id}
+    defaults:
+        _controller: SBCPlatformBundle:PlanificationPrevention:view
+    requirements:
+        id: \d*
+
+planification_prevention_add:
+    path:      /planification-prevention/add
+    defaults:  { _controller: SBCPlatformBundle:PlanificationPrevention:add }
+
+planification_prevention_edit:
+    path:      /planification-prevention/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:InterventionPreventive:edit }
+    requirements:
+        id: \d+
+
+planification_prevention_delete:
+    path:      /planification-prevention/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:PlanificationPrevention:delete }
+
+
+intervention_curative_home:
+    path:      /interventions-curatives/{page}
+    defaults:
+        _controller: SBCPlatformBundle:InterventionCurative:index
+        page:        1
+    requirements:
+        page: \d*
+
+intervention_curative_view:
+    path:      /intervention-curative/{id}
+    defaults:
+        _controller: SBCPlatformBundle:InterventionCurative:view
+    requirements:
+        id: \d*
+
+intervention_curative_add:
+    path:      /intervention-curative/add
+    defaults:  { _controller: SBCPlatformBundle:InterventionCurative:add }
+
+intervention_curative_edit:
+    path:      /intervention-curative/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:InterventionCurative:edit }
+    requirements:
+        id: \d+
+
+intervention_curative_delete:
+    path:      /intervention-curative/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:InterventionCurative:delete }
+
+
+intervention_preventive_home:
+    path:      /interventions-preventives/{page}
+    defaults:
+        _controller: SBCPlatformBundle:InterventionPreventive:index
+        page:        1
+    requirements:
+        page: \d*
+
+intervention_preventive_view:
+    path:      /intervention-preventive/{id}
+    defaults:
+        _controller: SBCPlatformBundle:InterventionPreventive:view
+    requirements:
+        id: \d*
+
+intervention_preventive_add:
+    path:      /intervention-preventive/add
+    defaults:  { _controller: SBCPlatformBundle:InterventionPreventive:add }
+
+intervention_preventive_edit:
+    path:      /intervention-preventive/edit/{id}
+    defaults:  { _controller: SBCPlatformBundle:InterventionPreventive:edit }
+    requirements:
+        id: \d+
+
+intervention_preventive_delete:
+    path:      /intervention-preventive/delete/{id}
+    defaults:  { _controller: SBCPlatformBundle:InterventionPreventive:delete }

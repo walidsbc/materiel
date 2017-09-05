@@ -1,0 +1,120 @@
+<div id="page_content_inner">
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-danger">
+        </div>
+        <div class="uk-width-1-1">
+            <div class="uk-alert uk-alert-danger" data-uk-alert>
+                <a href="#" class="uk-alert-close uk-close"></a>
+                {% trans %} La date de fin doit être supérieure ou égale à la date de début {% endtrans %}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="md-card">
+        <div class="md-card-content large-padding">
+            {{ form_start(form, {'attr': {'class': 'uk-form-stacked', 'id':'form_validation'}}) }}
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE0DA;</i>
+                            </span>
+                            {{ form_label(form.code,   "Code du chantier"|trans  ) }}
+                            {{ form_widget(form.code, {'attr': {'class': 'md-input', 'required':''}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.code) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE84F;</i>
+                            </span>
+                            {{ form_label(form.name,   "Nom du chantier"|trans  ) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'md-input', 'required':''}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.name) }} </span>
+                    </div>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="parsley-row">
+                        <div class="uk-input-group">
+                            <span class="uk-input-group-addon">
+                                <i class="material-icons">&#xE0C8;</i>
+                            </span>
+                            {{ form_label(form.location, "Localisation"|trans ) }}
+                            {{ form_widget(form.location, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <span class="col-md-6 col-sm-4 col-xs-12 control-label red">     {{ form_errors(form.location) }} </span>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-2">
+                    <div class="form-group" id="divbegindate">
+                        <div class="uk-grid">
+                            <div class="uk-width-large-2-3 uk-width-1-1">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon">
+                                        <i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                    <label for="uk_dp_1">{{ form_label(form.begindate, "Date début"|trans ) }}</label>
+                                    {{ form_widget(form.begindate, {'attr': {'class': 'md-input', 'id':'uk_dp_1', 'data-uk-datepicker':'{format:DD/MM/YYYY}'}}) }}
+                                    <span class="col-sm-4 control-label red">    {{ form_errors(form.begindate) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="form-group" id="divfinishdate">
+                        <div class="uk-grid">
+                            <div class="uk-width-large-2-3 uk-width-1-1">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon">
+                                        <i class="uk-input-group-icon uk-icon-calendar"></i>
+                                    </span>
+                                    <label for="uk_dp_1">   {{ form_label(form.finishdate, "Date de Fin"|trans ) }}</label>
+                                    {{ form_widget(form.finishdate, {'attr': {'class': 'md-input', 'id':'uk_dp_2', 'data-uk-datepicker':'{format:DD/MM/YYYY}'}}) }}
+                                    <span class="col-sm-4 control-label red" id="errorfinichdate">
+                                        {{ form_errors(form.finishdate) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-2">
+                    <div class="parsley-row">
+                        <label>{{ form_label(form.status, "Statut"|trans ) }}</label>
+                        <div class="dynamic_radio uk-margin-small-top">
+                            {% for child in form.status %}
+                                <span class="icheck-inline">
+                                {{ form_widget(child ,{ 'attr': { 'name': 'options', 'id':'child' , 'data-md-icheck':''}}) }}
+                                    {{ form_label(child) }}
+                            </span>
+                            {% endfor %}
+                            <span class="col-md-6 col-sm-4 col-xs-12 control-label red">
+                                {{ form_errors(form.status) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    {{ form_widget(form.save, {'attr': {'class': 'md-btn md-btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
